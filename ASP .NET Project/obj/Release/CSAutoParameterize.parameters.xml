@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="MyContext-Web.config Connection String" description="MyContext Connection String used in web.config by the application to access the database." defaultValue="data source=210.245.95.62;initial catalog=T1807E_TH1805040_PhamAnhDung_Onetech_Online_Electronics_Store;persist security info=True;user id=sa;password=z@GH7ytQ;MultipleActiveResultSets=True;App=EntityFramework" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Aspire\ A315-51\\source\\repos\\ASP\ \.NET\ Project\\ASP\ \.NET\ Project\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='MyContext']/@connectionString" />
+  </parameter>
+  <parameter name="ASPNET_ProjectContext-Web.config Connection String" description="ASPNET_ProjectContext Connection String used in web.config by the application to access the database." defaultValue="Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=ASPNET_ProjectContext-20191108173523; Integrated Security=True; MultipleActiveResultSets=True; AttachDbFilename=|DataDirectory|ASPNET_ProjectContext-20191108173523.mdf" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Aspire\ A315-51\\source\\repos\\ASP\ \.NET\ Project\\ASP\ \.NET\ Project\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ASPNET_ProjectContext']/@connectionString" />
+  </parameter>
+</parameters>

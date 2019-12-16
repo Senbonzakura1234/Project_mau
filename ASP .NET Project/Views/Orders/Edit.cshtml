@@ -1,0 +1,61 @@
+﻿@model ASP.NET_Project.Models.Order
+
+@{
+    ViewBag.Title = "Order - Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-8 mx-auto grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Order</h4>
+                <p class="card-description">Edit Order</p>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.CustomerId)
+                    @Html.HiddenFor(model => model.TotalPrice)
+                    @Html.HiddenFor(model => model.CreatedAt)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ShipName)
+                        @Html.EditorFor(model => model.ShipName, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+                        @Html.ValidationMessageFor(model => model.ShipName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ShipPhone)
+                        @Html.EditorFor(model => model.ShipPhone, new { htmlAttributes = new { @class = "form-control", placeholder = "Phone" } })
+                        @Html.ValidationMessageFor(model => model.ShipPhone, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ShipAddress)
+                        @Html.EditorFor(model => model.ShipAddress, new { htmlAttributes = new { @class = "form-control", type = "password", placeholder = "Password" } })
+                        @Html.ValidationMessageFor(model => model.ShipAddress, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PaymentTypeId)
+                        @Html.EnumDropDownListFor(x => x.PaymentTypeId, null,
+                            new { @class = "form-control mb-2 selectpicker form-selectpicker search-option-select" })
+                        @Html.ValidationMessageFor(model => model.PaymentTypeId, "", new { @class = "text-danger text-small" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.OrderStatus)
+                        @Html.EnumDropDownListFor(x => x.OrderStatus, null,
+                            new { @class = "form-control mb-2 selectpicker form-selectpicker search-option-select" })
+                        @Html.ValidationMessageFor(model => model.OrderStatus, "", new { @class = "text-danger text-small" })
+                    </div>
+                    <input type="submit" class="btn btn-gradient-primary mr-2" value="Update" />
+                    <a class="btn btn-light" href="@Url.Action("Index")">
+                        Cancel
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

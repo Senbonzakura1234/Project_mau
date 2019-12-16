@@ -1,0 +1,53 @@
+﻿@model ASP.NET_Project.Models.Customer
+
+@{
+    ViewBag.Title = "Customer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<hr />
+<div class="card" style="width: 18rem; border: none">
+    @*<img src="..." class="card-img-top" alt="...">*@
+    <div class="card-img-top text-center py-4 bg-primary" style="border-radius: 20px 20px 0 0;">
+        @* ReSharper disable UnknownCssClass *@
+        <i class="fas fa-box mx-auto text-white" style="font-size: 120px;"></i>
+        @* ReSharper restore UnknownCssClass *@
+    </div>
+    <div class="card-body" style="border-radius: 0 0 20px 20px; border-top: none; border: 1px solid #000000; border: 1px solid rgba(0, 0, 0, 0.125);">
+        <h5 class="card-title">
+            <b>Product no @Html.DisplayFor(model => model.Id)</b>
+        </h5>
+        <p class="card-text">
+            <b>@Html.DisplayNameFor(model => model.Fullname): </b>
+            @Html.DisplayFor(model => model.Fullname)
+        </p>
+        <p class="card-text">
+            <b>@Html.DisplayNameFor(model => model.Email): </b>
+            @Html.DisplayFor(model => model.Email)
+        </p>
+        <p class="card-text">
+            <b>@Html.DisplayNameFor(model => model.Phone): </b>
+            @Html.DisplayFor(model => model.Phone)
+        </p>
+        <p class="card-text">
+            <b>@Html.DisplayNameFor(model => model.Password): </b>
+            @Html.DisplayFor(model => model.Password)
+        </p>
+        <p class="card-text">
+            <b>@Html.DisplayNameFor(model => model.Age): </b>
+            @Html.DisplayFor(model => model.Age)
+        </p>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <span class="text-muted">Are you sure to delete?</span>
+            <div class="mt-2">
+                <input type="submit" value="Delete" class="btn btn-danger mr-3" />
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+
+        }
+    </div>
+</div>

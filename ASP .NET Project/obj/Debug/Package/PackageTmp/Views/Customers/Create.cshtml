@@ -1,0 +1,72 @@
+﻿@model ASP.NET_Project.Models.Customer
+
+@{
+    ViewBag.Title = "Customer - Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+    <div class="row">
+        <div class="col-md-8 mx-auto grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Customer</h4>
+                    <p class="card-description">Create Customer</p>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger text-small" })
+
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Fullname)
+                            @Html.EditorFor(model => model.Fullname, new { htmlAttributes = new { @class = "form-control mb-2", placeholder = "Fullname" } })
+                            @Html.ValidationMessageFor(model => model.Fullname, "", new { @class = "text-danger text-small" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email)
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control mb-2", placeholder = "Email" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger text-small" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Phone)
+                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control mb-2", placeholder = "Phone" } })
+                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger text-small" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Password)
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control mb-2", type = "password", placeholder = "Password" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger text-small" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ConfirmPassword)
+                            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control mb-2", type = "password", placeholder = "Confirm Password" } })
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger text-small" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Age)
+                            @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control mb-2", placeholder = "Age" } })
+                            @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger text-small" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Gender)
+                            @Html.EnumDropDownListFor(x => x.Gender, null, 
+                                new { @class = "form-control mb-2 selectpicker form-selectpicker search-option-select" })
+                            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger text-small" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Status)
+                            @Html.EnumDropDownListFor(x => x.Status, null, 
+                                new { @class = "form-control mb-2 selectpicker form-selectpicker search-option-select" })
+                            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger text-small" })
+                        </div>
+                        <input type="submit" class="btn btn-gradient-primary mr-2" value="Create" />
+                        <a class="btn btn-light" href="@Url.Action("Index")">
+                            Cancel
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>

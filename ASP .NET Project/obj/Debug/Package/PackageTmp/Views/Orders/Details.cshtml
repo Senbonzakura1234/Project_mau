@@ -1,0 +1,147 @@
+﻿@using System.Collections
+@using ASP.NET_Project.Models
+@model ASP.NET_Project.Models.Order
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var orderItemList = ViewBag.orderItemList as IEnumerable<OrderItem>;
+}
+
+
+<div class="row">
+    <div class="col-lg-6 col-xl-4 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <b>Order # @Html.DisplayFor(model => model.Id)</b>
+                </h5>
+                <p class="card-text">
+                    <b>Customer @Html.DisplayNameFor(model => model.Customer.Fullname): </b>
+                    @Html.DisplayFor(model => model.Customer.Fullname)
+                </p>
+                <p class="card-text">
+                    <b>@Html.DisplayNameFor(model => model.TotalPrice): </b>
+                    $ @Html.DisplayFor(model => model.TotalPrice)
+                </p>
+                <p class="card-text">
+                    <b>@Html.DisplayNameFor(model => model.ShipName): </b>
+                    @Html.DisplayFor(model => model.ShipName)
+                </p>
+                <p class="card-text">
+                    <b>@Html.DisplayNameFor(model => model.ShipPhone): </b>
+                    @Html.DisplayFor(model => model.ShipPhone)
+                </p>
+                <p class="card-text">
+                    <b>@Html.DisplayNameFor(model => model.ShipAddress): </b>
+                    @Html.DisplayFor(model => model.ShipAddress)
+                </p>
+                <p class="card-text">
+                    <b>@Html.DisplayNameFor(model => model.PaymentTypeId): </b>
+                    <span class="badge @(Model.PaymentTypeId == Order.PaymentTypeEnum.Cod ? "badge-gradient-warning" :
+                                           Model.PaymentTypeId == Order.PaymentTypeEnum.InternetBanking ? "badge-gradient-success" :
+                                               "badge-gradient-info")">
+                        @Html.DisplayFor(model => model.PaymentTypeId)
+                    </span>
+                </p>
+                <p class="card-text">
+                    <b>@Html.DisplayNameFor(model => model.OrderStatus): </b>
+                    <span class="badge @(Model.OrderStatus == Order.OrderStatusEnum.Pending ? "badge-gradient-warning" :
+                                                 Model.OrderStatus == Order.OrderStatusEnum.Confirm ? "badge-gradient-info" :
+                                                     Model.OrderStatus == Order.OrderStatusEnum.Shipping ? "badge-gradient-secondary" :
+                                                         Model.OrderStatus == Order.OrderStatusEnum.Paid ? "badge-gradient-primary" : 
+                                                         Model.OrderStatus == Order.OrderStatusEnum.Cancel ? "badge-gradient-danger" : 
+                                                         Model.OrderStatus == Order.OrderStatusEnum.Done ? "badge-gradient-success" : 
+                                                             "")">
+                        @Html.DisplayFor(model => model.OrderStatus)
+                    </span>
+                </p>
+                <div class="d-sm-flex">
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-sm btn-warning mr-3" })
+                    <button type="button" class="btn btn-danger btn-sm mr-3" data-toggle="modal" data-target="#exampleModal">
+                        Delete
+                    </button>
+                    <a class="btn btn-light btn-sm mt-2 mt-sm-0" href="@Url.Action("Index")">
+                        Back
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-xl-8 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body table-responsive">
+                <h4 class="card-title">Order items list</h4>
+                <p class="card-description">
+                    <span class="text-muted text-small">List of products in order</span>
+                </p>
+                <table class="table">
+                    <thead class="text-primary">
+                        <tr>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                Product
+                            </th>
+                            <th>
+                                Unit Price
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (orderItemList != null)
+                        {
+                            var i = 0;
+                            foreach (var item in orderItemList)
+                            {
+                                <tr>
+                                    <td>
+                                        <b class="text-small">@(i++)</b>
+                                    </td>
+                                    <td>
+                                        <b class="text-small">@item.Product.Name ($ @item.Product.Price)</b>
+                                    </td>
+                                    <td>
+                                        <b class="text-small">$ @item.UnitPrice</b>
+                                    </td>
+                                    <td>
+                                        <b class="text-small">@item.Quantity</b>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header border-0">
+                <h4 class="modal-title" id="exampleModalLabel">Confirm Delete</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure to completely delete this customer account?
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                @using (Html.BeginForm("Delete", "Orders", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.Id)
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                }
+            </div>
+        </div>
+    </div>
+</div>

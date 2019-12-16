@@ -1,0 +1,98 @@
+﻿@model ASP.NET_Project.ViewModels.ProductViewModel
+
+@{
+    ViewBag.Title = "Product - Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-8 mx-auto mx-lg-0 col-lg-6 col-xl-4 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-img-top text-center pt-3">
+                <img  src="@Model.Picture"
+                     style="max-width: 100%; max-height: 180px; padding: 4px;" alt="Product" />
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title text-center">
+                    <b>@Html.DisplayFor(model => model.Name)</b>
+                </h5>
+                <hr />
+
+                <p class="card-text">
+                    <b>@Html.DisplayNameFor(model => model.Description): </b>
+                    @Html.DisplayFor(model => model.Description)
+                </p>
+                <h3 class="card-text text-primary">
+                    <b>$@Html.DisplayFor(model => model.Price)</b>
+                </h3>
+
+                <p class="card-text">
+                    <b>@Html.DisplayNameFor(model => model.InStoke): </b>
+                    @Html.DisplayFor(model => model.InStoke)
+                </p>
+                <hr />
+                
+                <p class="card-text">
+                    @*@using (Html.BeginForm("Index", "Products", FormMethod.Get,
+                        new { role = "search", @class = "d-inline text-right" }))
+                    {
+                        @Html.Hidden("advanceBrand", Model.BrandId)
+                        <button type="submit" class="btn btn-link text-dark text-small ">
+                             <b>@Html.DisplayFor(model => model.BrandName)</b>
+                        </button>
+                    }  
+                    @using (Html.BeginForm("Index", "Products", FormMethod.Get,
+                        new { role = "search", @class = "d-inline text-right" }))
+                    {
+                        @Html.Hidden("advanceCategory", Model.CateId)
+                        <button type="submit" class="btn btn-link  text-dark text-small text-muted">
+                             @Html.DisplayFor(model => model.CateName)
+                        </button>
+                    }*@  
+                    <a class="text-decoration-none text-dark text-small" href="/Products?advanceBrand=@Html.DisplayFor(model => model.BrandId)">
+                        <b>@Html.DisplayFor(model => model.BrandName)</b>
+                    </a>
+                    -
+                    <a class="text-decoration-none text-dark text-small text-muted" href="/Products?advanceCategory=@Html.DisplayFor(model => model.CateId)">
+                        @Html.DisplayFor(model => model.CateName)
+                    </a>
+                </p>
+
+                <div class="d-sm-flex">
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-sm btn-warning ml-auto" })
+                    <button type="button" class="btn btn-danger btn-sm mx-1" data-toggle="modal" data-target="#exampleModal">
+                        Delete
+                    </button>
+                    <a class="btn btn-light btn-sm mt-2 mt-sm-0 mr-auto" href="@Url.Action("Index")">
+                        Back
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-white">
+            <div class="modal-header border-0">
+                <h4 class="modal-title" id="exampleModalLabel">Confirm Delete</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure to completely delete this product?
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                @using (Html.BeginForm("Delete", "Products", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.Id)
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+﻿@using ASP.NET_Project.Models
+@{
+    var shoppingCart = ViewBag.ShoppingCart as ShoppingCart;
+}
+
+
+
+<table class="table" id="update-cart">
+    <thead class="text-primary">
+        <tr>
+            <th>
+                Product
+            </th>
+            <th class="text-center">
+                Quantity
+            </th>
+            <th class="text-center">
+                Total
+            </th>
+            <th class="text-center">
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (shoppingCart != null)
+        {
+            foreach (var cartItem in shoppingCart.GetCartItems())
+            {
+                <tr>
+                    <td>
+                        @cartItem.ProductName ($ @cartItem.UnitPrice)
+                    </td>
+                    <td class="text-center">
+                        <div class="form-group mb-0">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button class="minus-item btn btn-primary btn-sm input-group-addon" data-id='@cartItem.ProductId'>-</button>
+                                </div>
+                                <input type='number' class='item-count form-control' data-id='@cartItem.ProductId' value='@cartItem.Quantity'>
+                                <div class="input-group-append">
+                                    <button class="plus-item btn btn-primary btn-sm input-group-addon" data-id='@cartItem.ProductId'>+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <button class='delete-item btn btn-danger btn-sm' data-id='@cartItem.ProductId'>X</button>
+                    </td>
+                    <td class="text-center">
+                        $ @(cartItem.UnitPrice * cartItem.Quantity)
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

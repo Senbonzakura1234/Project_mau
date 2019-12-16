@@ -1,0 +1,241 @@
+﻿ @* ReSharper disable RedundantUsingDirective *@
+ @using System.Activities.Statements
+ @using ASP.NET_Project.ViewModels
+
+@model PagedList.IPagedList<ASP.NET_Project.ViewModels.ProductViewModel>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Product - Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+    <div class="row">
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Advanced Search</h4>
+                    <p class="card-description d-sm-flex">
+                        <span class="text-muted text-small my-auto">Search Customer with filter</span>
+                        <br class="d-sm-none" />
+
+                        <a href="@Url.Action("Index")" class="btn btn-sm btn-light ml-auto mr-2 mt-2 mt-sm-0" id="clearFilterProduct">
+                            Clear filter
+                        </a>
+                    </p>
+                    @using (Html.BeginForm("Index", "Products", FormMethod.Get,
+                        new { role = "search", id = "AdvanceSearchFormProduct" }))
+                    {
+                        <div class="row">
+                            <div class="col-sm-6 col-md-12 mb-md-3">
+                                <div class="form-group mb-lg-0">
+                                    <label for="advanceName">
+                                        <span class="text-small">Product Name</span>
+                                    </label>
+                                    <input id="advanceName" value="@ViewBag.advanceName" name="advanceName"
+                                           type="text" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-4">
+                                <div class="form-group mb-lg-0">
+                                    @* ReSharper disable once Html.IdNotResolved *@
+                                    <label for="advanceBrand">
+                                        <span class="text-small">Brand</span>
+                                    </label>
+                                    @*<select class="form-control  selectpicker form-selectpicker search-option-select"
+                                            id="advanceBrand" name="advanceBrand">
+                                    </select>*@
+                                    @Html.DropDownList("advanceBrand", new SelectList(ViewBag.brandsList, "Id", "Name"), "---Select---",
+                                        new { @class = "form-control  selectpicker form-selectpicker search-option-select", id = "advanceBrand" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-4">
+                                <div class="form-group mb-lg-0">
+                                    @* ReSharper disable once Html.IdNotResolved *@
+                                    <label for="advanceCategory">
+                                        <span class="text-small">Category</span>
+                                    </label>
+                                    @*<select class="form-control  selectpicker form-selectpicker search-option-select"
+                                            id="advanceBrand" name="advanceBrand">
+                                    </select>*@
+                                    @Html.DropDownList("advanceCategory", new SelectList(ViewBag.categoriesList, "Id", "Name"), "---Select---",
+                                        new { @class = "form-control  selectpicker form-selectpicker search-option-select", id = "advanceCategory" })
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-md-2">
+                                <div class="form-group mb-lg-0">
+                                    <label for="advancePriceFrom">
+                                        <span class="text-small">Price from</span>
+                                    </label>
+                                    <select class="form-control selectpicker form-selectpicker search-option-select"
+                                            id="advancePriceFrom" name="advancePriceFrom">
+                                        <option value="0">$0</option>
+                                        <option value="10">$10</option>
+                                        <option value="40">$40</option>
+                                        <option value="70">$70</option>
+                                        <option value="100">$100</option>
+                                        <option value="500">$500</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-md-2">
+                                <div class="form-group mb-lg-0">
+                                    <label for="advancePriceTo">
+                                        <span class="text-small">Price to</span>
+                                    </label>
+                                    <select class="form-control selectpicker form-selectpicker search-option-select"
+                                            id="advancePriceTo" name="advancePriceTo">
+                                        <option value="0">- No Limit -</option>
+                                        <option value="500">$500</option>
+                                        <option value="400">$400</option>
+                                        <option value="200">$200</option>
+                                        <option value="100">$100</option>
+                                        <option value="50">$50</option>
+                                        <option value="10">$10</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="d-none">
+                                <div class="form-check form-check-flat form-check-primary text-small mb-lg-0">
+                                    <label for="advanceCheck" class="form-check-label">
+                                        <input name="advanceCheck" id="advanceCheck"
+                                               type="checkbox" class="form-check-input">
+                                        Combine search
+                                    </label>
+                                    @Html.Hidden("advanceCheckValue", 0, new { id = "advanceCheckValue" })
+                                </div>
+                            </div>
+                            <div class="col-sm-12 mt-3 text-right">
+                                <input type="submit" class="btn btn-primary btn-sm" value="Search" id="form-submit-btn" />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    
+    
+
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body" id="update-product">
+                    <h4 class="card-title">Product</h4>
+                    <p class="card-description d-sm-flex">
+                        <span class="text-muted text-small my-auto">Click product name to see detail</span>
+                        <br class="d-sm-none" />
+
+                        <a class="btn btn-sm btn-primary ml-auto mr-2 mt-2 mt-sm-0" href="@Url.Action("Create", "Products")">
+                            Create New <span class="mdi mdi-plus-circle"></span>
+                        </a>
+                    </p>
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-sm-6 col-lg-5 mx-lg-auto mx-xl-0 col-xl-3 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-img-top text-center pt-3">
+                                        <img src="@item.Picture"
+                                             style="max-width: 100%; max-height: 180px; padding: 4px;" alt="Product" />
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-center">
+                                            <a class="text-dark" href="@Url.Action("Details", "Products", new {id = item.Id})">
+                                                <b>
+                                                    @Html.DisplayFor(model => item.Name)
+                                                </b>
+                                            </a>
+                                        </h5>
+                                        <h4 class="text-primary font-weight-bold text-center">
+                                            $ @Html.DisplayFor(model => item.Price)
+                                        </h4>
+                                        <hr />
+                                        <p class="card-text text-center">
+                                            <a class="text-decoration-none text-dark text-small" href="/Products?advanceBrand=@Html.DisplayFor(model => item.BrandId)">
+                                                <b>@Html.DisplayFor(model => item.BrandName)</b>
+                                            </a>
+                                            -
+                                            <a class="text-decoration-none text-dark text-small text-muted" href="/Products?advanceCategory=@Html.DisplayFor(model => item.CateId)">
+                                                @Html.DisplayFor(model => item.CateName)
+                                            </a>
+                                        </p>
+                                        <div class="d-sm-flex">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col mx-auto text-center">
+                            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                        </div>
+                    </div>
+                    <div class="row paging-control mt-2">
+                        <div class="mx-auto text-center">
+                            @Html.PagedListPager(Model, page => Url.Action("Index",
+                                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="col-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Advanced Search</h4>
+                    <p class="card-description d-sm-flex">
+                        <span class="text-muted text-small my-auto">Search Customer with filter</span>
+                        <br class="d-sm-none" />
+
+                        <a class="btn btn-sm btn-light ml-auto mr-2 mt-2 mt-sm-0" href="@Url.Action("Index")">
+                            Clear filter
+                        </a>
+                    </p>
+                    @using (Html.BeginForm("Index", "Customers", FormMethod.Get,
+                        new { role = "search" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group mb-lg-0">
+                                    <label for="advanceFullname">Fullname</label>
+                                    <input id="advanceFullname" value="@ViewBag.advanceFullname" name="advanceFullname" type="text" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group mb-lg-0">
+                                    <label for="advanceEmail">Email</label>
+                                    <input id="advanceEmail" value="@ViewBag.advanceEmail" name="advanceEmail" type="text" class="form-control form-control-sm" min="0" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group mb-lg-0">
+                                    <label for="advanceAge">Age</label>
+                                    <input id="advanceAge" value="@ViewBag.advanceAge" name="advanceAge" type="number" class="form-control form-control-sm" min="0" />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-check form-check-flat form-check-primary text-small mb-lg-0">
+                                    <label for="advanceCheck" class="form-check-label">
+                                        <input name="advanceCheck" id="advanceCheck"
+                                               type="checkbox" class="form-check-input">
+                                        Combine search
+                                    </label>
+                                    @Html.Hidden("advanceCheckValue", new { id = "advanceCheckValue", value = 0 })
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-2 text-right">
+                                <input type="submit" class="btn btn-primary" value="Search" />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>*@
+    </div>
+

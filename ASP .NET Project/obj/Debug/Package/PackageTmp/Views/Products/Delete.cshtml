@@ -1,0 +1,49 @@
+﻿@model ASP.NET_Project.Models.Product
+
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<hr />
+<div class="card" style="width: 18rem; border: none">
+    @*<img src="..." class="card-img-top" alt="...">*@
+    <div class="card-img-top text-center py-4 bg-primary" style="border-radius: 20px 20px 0 0;">
+        @* ReSharper disable UnknownCssClass *@
+        <i class="fas fa-box mx-auto text-white" style="font-size: 120px;"></i>
+        @* ReSharper restore UnknownCssClass *@
+    </div>
+    <div class="card-body" style="border-radius: 0 0 20px 20px; border-top: none; border: 1px solid #000000; border: 1px solid rgba(0, 0, 0, 0.125);">
+        <h5 class="card-title">
+            <b>Product no @Html.DisplayFor(model => model.Id)</b>
+        </h5>
+        <p class="card-text">
+            <b>@Html.DisplayNameFor(model => model.Name): </b>
+            @Html.DisplayFor(model => model.Name)
+        </p>
+        <p class="card-text">
+            <b>@Html.DisplayNameFor(model => model.Description): </b>
+            @Html.DisplayFor(model => model.Description)
+        </p>
+        <p class="card-text">
+            <b>@Html.DisplayNameFor(model => model.Price): </b>
+            $@Html.DisplayFor(model => model.Price)
+        </p>
+        <p class="card-text">
+            <b>@Html.DisplayNameFor(model => model.InStoke): </b>
+            @Html.DisplayFor(model => model.InStoke)
+        </p>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <span class="text-muted">Are you sure to delete?</span>
+            <div class="mt-2">
+                <input type="submit" value="Delete" class="btn btn-danger mr-3" />
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+
+        }
+    </div>
+</div>

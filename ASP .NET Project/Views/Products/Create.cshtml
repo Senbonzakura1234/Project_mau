@@ -1,0 +1,69 @@
+﻿@model ASP.NET_Project.Models.Product
+
+@{
+    ViewBag.Title = "Product - Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-md-8 mx-auto grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Product</h4>
+                <p class="card-description">Create Product</p>
+                @using (Html.BeginForm())
+                {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger text-small" })
+
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name)
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Product Name" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger text-small" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description)
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Description" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger text-small" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Price)
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-gradient-primary text-white">$</span>
+                            </div>
+                            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", placeholder = "Price" } })
+                            <div class="input-group-append">
+                                <span class="input-group-text">.00</span>
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger text-small" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.InStoke)
+                        @Html.EditorFor(model => model.InStoke, new { htmlAttributes = new { @class = "form-control", min = 0, placeholder = "In Stoke" } })
+                        @Html.ValidationMessageFor(model => model.InStoke, "", new { @class = "text-danger text-small" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CategoryId)
+                        @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control mb-2 selectpicker form-selectpicker search-option-select" })
+                        @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger text-small" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BrandId)
+                        @Html.DropDownList("BrandId", null, htmlAttributes: new { @class = "form-control mb-2 selectpicker form-selectpicker search-option-select" })
+                        @Html.ValidationMessageFor(model => model.BrandId, "", new { @class = "text-danger text-small" })
+                    </div>
+
+                    <input type="submit" class="btn btn-gradient-primary mr-2" value="Create" />
+                    <a class="btn btn-light" href="@Url.Action("Index")">
+                        Cancel
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

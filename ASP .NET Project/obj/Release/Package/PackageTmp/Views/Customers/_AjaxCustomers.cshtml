@@ -1,0 +1,88 @@
+﻿@using ASP.NET_Project.Models
+@model IEnumerable<ASP.NET_Project.Models.Customer>
+@{
+    Layout = null;
+}
+    <table class="table" id="update-customer">
+        <thead class="text-primary">
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Avatar
+                </th>
+                <th class="text-center d-none d-sm-table-cell">
+                    @Html.DisplayNameFor(model => model.Gender)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fullname)
+                </th>
+                <th class="d-none d-sm-table-cell">
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th class="d-none d-xl-table-cell">
+                    @Html.DisplayNameFor(model => model.Phone)
+                </th>
+                <th class="text-center d-none d-xl-table-cell">
+                    @Html.DisplayNameFor(model => model.Age)
+                </th>
+                <th class="text-center d-none d-lg-table-cell">
+                    Edit
+                </th>
+            </tr>
+        </thead>
+        <tbody >
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>
+                        <b class="text-small">@Html.DisplayFor(modelItem => item.Id)</b>
+                    </td>
+                    <td>
+                        <img src="https://res.cloudinary.com/senbonzakura/image/upload/c_scale,w_100/v1573316680/images/faces/avatar2_p9btpy.png"
+                             style="max-height: 100%; border-radius: 100%;" alt="image">
+                    </td>
+                    <td class="text-center d-none d-sm-table-cell">
+                        <i class="mdi @(item.Gender == Customer.GenderEnum.Male ? "mdi-gender-male text-info" :
+                                                          item.Gender == Customer.GenderEnum.Female ? "mdi-gender-female text-danger" :
+                                                              item.Gender == Customer.GenderEnum.Undefined ? "mdi-gender-transgender text-primary" :
+                                                                  "mdi-lock text-dark")"></i>
+                    </td>
+                    <td>
+                        <a class="badge w-100 @(item.Status == Customer.StatusEnum.Inactive ? "badge-gradient-secondary" :
+                                                                  item.Status == Customer.StatusEnum.Active ? "badge-gradient-success" :
+                                                                      item.Status == Customer.StatusEnum.Locked ? "badge-gradient-warning" :
+                                                                          item.Status == Customer.StatusEnum.Banned ? "badge-gradient-danger" : "badge-gradient-dark")
+                                            w-100" href="@Url.Action("Details", "Customers", new {id = item.Id})">
+                            @Html.DisplayFor(modelItem => item.Fullname)
+                        </a>
+                    </td>
+                    <td class="d-none d-sm-table-cell text-info">
+                        @item.Email
+                    </td>
+                    <td class="d-none d-xl-table-cell">
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td class="text-center d-none d-xl-table-cell">
+                        @Html.DisplayFor(modelItem => item.Age)
+                    </td>
+                    <td class="text-center d-none d-lg-table-cell">
+                        <a class="badge badge-warning" href="@Url.Action("Edit", "Customers", new {id = item.Id})">
+                            <span class="mdi mdi-pencil-box-outline"></span>
+                        </a>
+                    </td>
+                </tr>
+                @*<a class="btn btn-link" href="@Url.Action("Edit", "Customers", new {id = item.Id})">
+                    <span class="mdi mdi-pencil-box-outline"></span>
+                </a>
+                <a class="btn btn-link" href="@Url.Action("Details", "Customers", new {id = item.Id})">
+                    <span class="mdi mdi-file-document"></span>
+                </a>
+                <a class="btn btn-link" href="@Url.Action("Delete", "Customers", new {id = item.Id})">
+                    <span class="mdi mdi-trash-can-outline"></span>
+                </a>*@
+            }
+        </tbody>
+    </table>
