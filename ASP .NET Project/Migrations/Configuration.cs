@@ -11,7 +11,7 @@ namespace ASP.NET_Project.Migrations
     // ReSharper disable once UnusedMember.Global
     internal sealed class Configuration : DbMigrationsConfiguration<MyDbContext>
     {
-        private Random gen = new Random();
+        private readonly Random _gen = new Random();
 
         public Configuration()
         {
@@ -34,14 +34,14 @@ namespace ASP.NET_Project.Migrations
             {
                 var start = new DateTime(2016, 1, 1);
                 var range = (DateTime.Today.AddDays(-1) - start).Days;
-                return start.AddDays(gen.Next(range));
+                return start.AddDays(_gen.Next(range));
             }
             else
             {
                 var start = new DateTime(2011, 1, 1);
                 var end = new DateTime(2015, 12,31);
                 var range = (DateTime.Today - end).Days;
-                return start.AddDays(gen.Next(range));
+                return start.AddDays(_gen.Next(range));
             }
         }
         protected override void Seed(MyDbContext context)
@@ -130,7 +130,7 @@ namespace ASP.NET_Project.Migrations
                     }
                 );
             }
-
+            
             context.Customers.AddOrUpdate(x => x.Id,
                 new Customer
                 {

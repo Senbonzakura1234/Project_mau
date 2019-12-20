@@ -15,7 +15,6 @@ namespace ASP.NET_Project.Models
         [DisplayName("Name")]
         [Required(ErrorMessage = "The Name is required")]
         public string Name { get; set; }
-
         [DisplayName("Description")]
         [Required(ErrorMessage = "The Description is required")]
         public string Description { get; set; }
