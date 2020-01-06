@@ -13,7 +13,8 @@ namespace ASP.NET_Project.Models
 {
     public class Product
     {
-        public int Id { get; set; }
+        [Key]
+        public Guid Id { get; set; }
 
         [DisplayName("Name")]
         [Required(ErrorMessage = "The Name is required")]
@@ -72,6 +73,7 @@ namespace ASP.NET_Project.Models
 
         public Product()
         {
+            Id = Guid.NewGuid();
             CreatedAt = DateTime.Now;
             UpdatedAt = DateTime.Now;
             ProductStatus = ProductStatusEnum.Show;

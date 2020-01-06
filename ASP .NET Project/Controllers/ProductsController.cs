@@ -159,28 +159,39 @@ namespace ASP.NET_Project.Controllers
 
 
         // GET: Products/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(string id)
         {
-            if (id == null)
+            try
             {
+                var newGuid = Guid.Parse(id);
+                Console.WriteLine($@"Converted {id} to a Guid");
+                var product = _db.Products.Find(newGuid);
+                if (product == null)
+                {
+                    return HttpNotFound();
+                }
+                var data = new ProductViewModel(
+                    product.Id,
+                    product.Name,
+                    product.Description,
+                    product.Price,
+                    product.InStoke,
+                    product.CategoryId,
+                    product.BrandId,
+                    product.Picture
+                );
+                return View(data);
+            }
+            catch (ArgumentNullException)
+            {
+                Console.WriteLine(@"The string to be parsed is null.");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var product = _db.Products.Find(id);
-            if (product == null)
+            catch (FormatException)
             {
-                return HttpNotFound();
+                Console.WriteLine($@"Bad format: {id}");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var data = new ProductViewModel(
-                product.Id,
-                product.Name,
-                product.Description,
-                product.Price,
-                product.InStoke,
-                product.CategoryId,
-                product.BrandId,
-                product.Picture
-            );
-            return View(data);
         }
 
         // GET: Products/Create
@@ -208,20 +219,33 @@ namespace ASP.NET_Project.Controllers
         }
 
         // GET: Products/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(string id)
         {
-            if (id == null)
+            try
             {
+                var newGuid = Guid.Parse(id);
+                Console.WriteLine($@"Converted {id} to a Guid");
+                var product = _db.Products.Find(newGuid);
+                if (product == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name", product.CategoryId);
+                ViewBag.BrandId = new SelectList(_db.Brands, "Id", "Name", product.BrandId);
+                return View(product);
+            }
+            catch (ArgumentNullException)
+            {
+                Console.WriteLine(@"The string to be parsed is null.");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             }
-            var product = _db.Products.Find(id);
-            if (product == null)
+            catch (FormatException)
             {
-                return HttpNotFound();
+                Console.WriteLine($@"Bad format: {id}");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             }
-            ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name", product.CategoryId);
-            ViewBag.BrandId = new SelectList(_db.Brands, "Id", "Name", product.BrandId);
-            return View(product);
         }
 
         // POST: Products/Edit/5
@@ -241,33 +265,61 @@ namespace ASP.NET_Project.Controllers
         }
 
         // GET: Products/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(string id)
         {
-            if (id == null)
+            try
             {
+                var newGuid = Guid.Parse(id);
+                Console.WriteLine($@"Converted {id} to a Guid");
+                var product = _db.Products.Find(newGuid);
+                if (product == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(product);
+            }
+            catch (ArgumentNullException)
+            {
+                Console.WriteLine(@"The string to be parsed is null.");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             }
-            var product = _db.Products.Find(id);
-            if (product == null)
+            catch (FormatException)
             {
-                return HttpNotFound();
+                Console.WriteLine($@"Bad format: {id}");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             }
-            return View(product);
         }
 
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
-            var product = _db.Products.Find(id);
-            if (product == null) return RedirectToAction("Index");
-            product.ProductStatus = Product.ProductStatusEnum.Deleted;
-            product.UpdatedAt = DateTime.Now;
-            product.DeletedAt = DateTime.Now;
-            _db.Entry(product).State = EntityState.Modified;
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                var newGuid = Guid.Parse(id);
+                Console.WriteLine($@"Converted {id} to a Guid");
+                var product = _db.Products.Find(newGuid);
+                if (product == null) return RedirectToAction("Index");
+                product.ProductStatus = Product.ProductStatusEnum.Deleted;
+                product.UpdatedAt = DateTime.Now;
+                product.DeletedAt = DateTime.Now;
+                _db.Entry(product).State = EntityState.Modified;
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (ArgumentNullException)
+            {
+                Console.WriteLine(@"The string to be parsed is null.");
+                return RedirectToAction("Index");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine($@"Bad format: {id}");
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

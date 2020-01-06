@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
 using ASP.NET_Project.Models;
 
 namespace ASP.NET_Project.ViewModels
@@ -15,7 +14,7 @@ namespace ASP.NET_Project.ViewModels
             GetListCategory();
             GetListBrand();
         }
-        public ProductViewModel(int id, string name, string description,
+        public ProductViewModel(Guid id, string name, string description,
             double price, int inStoke, int cateId, int brandId, string picture)
         {
             Id = id;
@@ -42,7 +41,7 @@ namespace ASP.NET_Project.ViewModels
             GetListBrand();
         }
         [DisplayName("Id")]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [DisplayName("Name")]
         [Required(ErrorMessage = "The Name is required")]

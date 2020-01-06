@@ -5,6 +5,7 @@
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=24A48FD1_002DE264_002D4A0A_002DA7F9_002D92417F69B746_002Fd_003AContent_002Fd_003AHomePage_002Fd_003Aplugins_002Ff_003Amaterial_002Ddesign_002Diconic_002Dfont_002Emin_002Ecss/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=24A48FD1_002DE264_002D4A0A_002DA7F9_002D92417F69B746_002Fd_003AContent_002Fd_003AHomePage_002Fd_003Aplugins_002Ff_003Aowl_002Ecarousel_002Emin_002Ecss/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=24A48FD1_002DE264_002D4A0A_002DA7F9_002D92417F69B746_002Fd_003AContent_002Fd_003AHomePage_002Fd_003Aplugins_002Ff_003Aslick_002Emin_002Ecss/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=24A48FD1_002DE264_002D4A0A_002DA7F9_002D92417F69B746_002Fd_003AContent_002Fd_003Avendors_002Fd_003Ajs_002Ff_003Avendor_002Ebundle_002Ebase_002Ejs/@EntryIndexedValue">ForceIncluded</s:String>
 	
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=24A48FD1_002DE264_002D4A0A_002DA7F9_002D92417F69B746_002Fd_003AScripts_002Ff_003Apopper_002Ejs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=amet/@EntryIndexedValue">True</s:Boolean>

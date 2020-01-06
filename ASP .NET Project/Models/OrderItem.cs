@@ -13,7 +13,7 @@ namespace ASP.NET_Project.Models
         public int Quantity { get; set; }
         public double UnitPrice { get; set; }
         [Key, Column(Order = 0)]
-        public int ProductId { get; set; }
+        public Guid ProductId { get; set; }
         [Key, Column(Order = 1)]
         public int OrderId { get; set; }
 

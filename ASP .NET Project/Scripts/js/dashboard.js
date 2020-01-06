@@ -21,9 +21,12 @@ $(function () {
     });
 
     // Remove pro banner on close
-    document.querySelector("#bannerClose").addEventListener("click", function () {
-        document.querySelector("#proBanner").classList.add("d-none");
-    });
+    if ($("#bannerClose").length) {
+        document.querySelector("#bannerClose").addEventListener("click", function () {
+                document.querySelector("#proBanner").classList.add("d-none");
+            });
+    }
+    
 
     window.Chart.defaults.global.legend.labels.usePointStyle = true;
 

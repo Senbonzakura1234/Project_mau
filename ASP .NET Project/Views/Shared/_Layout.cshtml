@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -13,7 +14,7 @@
     @Styles.Render("~/Content/vendors/css/vendor.bundle.base.css")
     @Styles.Render("~/Content/css/style.css")
     @Styles.Render("~/Content/bootstrap-select.css")
-    
+
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     @Styles.Render("~/Content/site.css")
     <!-- endinject -->
@@ -216,18 +217,57 @@
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item nav-profile">
-                        <a href="@Url.Action("Index", "DashBoard")" class="nav-link">
-                            <div class="nav-profile-image">
-                                <img src="https://res.cloudinary.com/senbonzakura/image/upload/c_scale,w_100/v1573316231/images/faces/avatar_jeogra.jpg" alt="profile">
-                                <span class="login-status online"></span>
-                                <!--change to offline or busy as needed-->
-                            </div>
-                            <div class="nav-profile-text d-flex flex-column">
-                                <span class="font-weight-bold mb-2">Senbonzakura</span>
-                                <span class="text-secondary text-small">Project Manager</span>
-                            </div>
-                            <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+                        <a data-toggle="collapse" href="#drop-down-profile"
+                           aria-controls="drop-down-profile" class="nav-link">
+                            @if (Request.IsAuthenticated)
+                            {
+                                <div class="nav-profile-image">
+                                    <img src="https://res.cloudinary.com/senbonzakura/image/upload/c_scale,w_100/v1573316231/images/faces/avatar_jeogra.jpg" alt="profile">
+                                    <span class="login-status online"></span>
+                                    <!--change to offline or busy as needed-->
+                                </div>
+                                <div class="nav-profile-text d-flex flex-column">
+                                    <span class="font-weight-bold mb-2">@User.Identity.GetUserName()</span>
+                                    <span class="text-secondary text-small">Admin</span>
+                                </div>
+                                <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+                            }
+                            else
+                            {
+                                <div class="nav-profile-text d-flex flex-column">
+                                    <span class="font-weight-bold mb-2">User</span>
+                                </div>
+                            }
                         </a>
+
+                        <div class="collapse" id="drop-down-profile">
+                            <ul class="nav flex-column sub-menu">
+                                @if (Request.IsAuthenticated)
+                                {
+                                    using (Html.BeginForm("Logout", "Users", FormMethod.Post, new { id = "logoutForm", @class = "d-none" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                    }
+                                    <li class="nav-item">
+                                        @* ReSharper disable once Html.IdNotResolved *@
+                                        <a class="nav-link"
+                                           href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="loginLink"
+                                           href="@Url.Action("Login", "Users")">Login</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="registerLink"
+                                           href="@Url.Action("Register", "Users")">Register</a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Index", "DashBoard")">
@@ -327,38 +367,7 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#general-pages" aria-expanded="false"
-                           aria-controls="general-pages">
-                            <span class="menu-title">Sample Pages</span>
-                            <i class="menu-arrow"></i>
-                            <i class="mdi mdi-medical-bag menu-icon"></i>
-                        </a>
-                        <div class="collapse" id="general-pages">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        Blank
-                                        Page
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#"> Login </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        Register
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#"> 404 </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#"> 500 </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+
                     <li class="nav-item sidebar-actions">
                         <span class="nav-link">
                             <span class="border-bottom">
@@ -425,7 +434,7 @@
                                        placeholder="Search projects" name="searchTerm">
                             </div>*@
                     </div>
-                    <input type="hidden" value="@HttpContext.Current.Request.Url.AbsolutePath"/>
+                    <input type="hidden" value="@HttpContext.Current.Request.Url.AbsolutePath" />
                     @RenderBody()
                 </div>
                 <!-- content-wrapper ends -->
@@ -462,9 +471,9 @@
         <script src="../../assets/js/hoverable-collapse.js"></script>
         <script src="../../assets/js/misc.js"></script>*@
 
-<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     @RenderSection("scripts", required: false)
     <!-- endinject -->
     <!-- Custom js for this page -->

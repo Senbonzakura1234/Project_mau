@@ -1,6 +1,7 @@
 ﻿// ReSharper disable RedundantUsingDirective
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,61 +21,62 @@ namespace ASP.NET_Project.Controllers
         }
         public ActionResult GetBannerData()
         {
-            var now = DateTime.Now;
-            var firstDayCurrentMonth = new DateTime(now.Year, now.Month, 1);
+            //var now = DateTime.Now;
+            //var firstDayCurrentMonth = new DateTime(now.Year, now.Month, 1);
 
-            var startLastMonth = new DateTime(now.Year, now.Month - 1, 1);
-            var endLastMonth = firstDayCurrentMonth.AddDays(-1);
-            var startEarlier = new DateTime(now.Year, now.Month - 2, 1);
-            var endEarlier = startLastMonth.AddDays(-1);
+            //var startLastMonth = new DateTime(now.Year, now.Month - 1, 1);
+            //var endLastMonth = firstDayCurrentMonth.AddDays(-1);
+            //var startEarlier = new DateTime(now.Year, now.Month - 2, 1);
+            //var endEarlier = startLastMonth.AddDays(-1);
 
-            var data = _db.Orders.Where(s => s.OrderStatus != Order.OrderStatusEnum.Deleted && 
-                                             s.OrderStatus != Order.OrderStatusEnum.Cancel &&
-                                             s.CreatedAt >= startLastMonth && s.CreatedAt <= endLastMonth);
-            var dataEarlier = _db.Orders.Where(s => s.OrderStatus != Order.OrderStatusEnum.Deleted && 
-                                             s.OrderStatus != Order.OrderStatusEnum.Cancel &&
-                                             s.CreatedAt >= startEarlier && s.CreatedAt <= endEarlier);
-            var customer = _db.Customers.Count();
-            double lastMonth = 0;
-            foreach (var item in data)
-            {
-                lastMonth += item.TotalPrice;
-            }
-            double earlierMonth = 0;
-            foreach (var item in dataEarlier)
-            {
-                earlierMonth +=  item.TotalPrice;
-            }
+            //var data = _db.Orders.Where(s => s.OrderStatus != Order.OrderStatusEnum.Deleted && 
+            //                                 s.OrderStatus != Order.OrderStatusEnum.Cancel &&
+            //                                 s.CreatedAt >= startLastMonth && s.CreatedAt <= endLastMonth);
+            //var dataEarlier = _db.Orders.Where(s => s.OrderStatus != Order.OrderStatusEnum.Deleted && 
+            //                                 s.OrderStatus != Order.OrderStatusEnum.Cancel &&
+            //                                 s.CreatedAt >= startEarlier && s.CreatedAt <= endEarlier);
+            //var customer = _db.Customers.Count();
+            //double lastMonth = 0;
+            //foreach (var item in data)
+            //{
+            //    lastMonth += item.TotalPrice;
+            //}
+            //double earlierMonth = 0;
+            //foreach (var item in dataEarlier)
+            //{
+            //    earlierMonth +=  item.TotalPrice;
+            //}
 
-            double percentage;
-            string detailPercent;
-            if (lastMonth >= earlierMonth && earlierMonth > 0)
-            {
-                percentage = lastMonth * 100 / earlierMonth;
-                detailPercent = "Increased";
-            }
-            else if(lastMonth < earlierMonth && lastMonth > 0)
-            {
-                percentage = earlierMonth * 100 / lastMonth;
-                detailPercent = "Decreased";
+            //double percentage;
+            //string detailPercent;
+            //if (lastMonth >= earlierMonth && earlierMonth > 0)
+            //{
+            //    percentage = lastMonth * 100 / earlierMonth;
+            //    detailPercent = "Increased";
+            //}
+            //else if(lastMonth < earlierMonth && lastMonth > 0)
+            //{
+            //    percentage = earlierMonth * 100 / lastMonth;
+            //    detailPercent = "Decreased";
 
-            }
-            else
-            {
-                percentage = 0;
-                detailPercent = "No data";
-            }
-            lastMonth = (int)lastMonth;
-            earlierMonth = (int)earlierMonth;
-            var percentageInt = (int)percentage;
-            return Json(new
-            {
-                lastMonth,
-                earlierMonth,
-                detailPercent,
-                percentage,
-                percentageInt, customer
-            }, JsonRequestBehavior.AllowGet);
+            //}
+            //else
+            //{
+            //    percentage = 0;
+            //    detailPercent = "No data";
+            //}
+            //lastMonth = (int)lastMonth;
+            //earlierMonth = (int)earlierMonth;
+            //var percentageInt = (int)percentage;
+            //return Json(new
+            //{
+            //    lastMonth,
+            //    earlierMonth,
+            //    detailPercent,
+            //    percentage,
+            //    percentageInt, customer
+            //}, JsonRequestBehavior.AllowGet);
+            return null;
         }
 
         // > $40000, <= $40000 && > $10000, <= $10000
